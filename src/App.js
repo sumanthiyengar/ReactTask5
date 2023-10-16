@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
 
 function App() {
+  const [birthdate, setBirthdate] = useState("");
+  const [age, setAge] = useState(0);
+
+  function calculateAge() {
+    const today = new Date();
+    const birthdateDate = new Date(birthdate);
+
+    let age = today.getFullYear() - birthdateDate.getFullYear();
+    const monthDiff = today.getMonth() - birthdateDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdateDate.getDate())) {
+        age--;
+    }
+    setAge(age);
+};
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="box">
+      <h1 id="heading">Age Calculator</h1>
+      <div className="input">
+        <p>Enter your date of birth</p>
+        <input
+          type="date"
+          className="inp"
+          value={birthdate}
+          onChange={(e) => setBirthdate(e.target.value)}
+        />
+      </div>
+
+      <div className="button">
+        <button className="btn" onClick={calculateAge}>
+          Calculate Age
+        </button>
+      </div>
+
+      <div className="output">
+        <div className="Container_middle_para">
+        </div>
+        <h1 className="age_heading"> {age > 0 ? `Your Age is ${age}  years old` : ""}</h1>
+      </div>
     </div>
   );
 }
